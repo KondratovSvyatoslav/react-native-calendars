@@ -55,7 +55,8 @@ export default function styleConstructor(theme={}) {
       backgroundColor: appStyle.dotColor
     },
     selectedDot: {
-      backgroundColor: appStyle.selectedDotColor
+      backgroundColor: appStyle.selectedDotColor,
+      ...appStyle.selectedDotStyle,
     },
     disabledDot: {
       backgroundColor: appStyle.disabledDotColor || appStyle.dotColor
