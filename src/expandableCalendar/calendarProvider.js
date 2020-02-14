@@ -40,8 +40,8 @@ class CalendarProvider extends Component {
     disabledOpacity: PropTypes.number,
     /** Should disabled past days selection deafult is false*/
     canSelectPast: PropTypes.bool,
-    /** Today's date*/
-    today: PropTypes.any,
+    /** Minimum date to be selected */
+    minDate: PropTypes.any,
   }
 
   constructor(props) {
@@ -55,8 +55,7 @@ class CalendarProvider extends Component {
       buttonIcon: this.getButtonIcon(props.date),
       disabled: false,
       opacity: new Animated.Value(1),
-      canSelectPast: this.props.canSelectPast,
-      today: this.props.today || XDate().toString('yyyy-MM-dd'),
+      minDate: this.props.minDate || undefined,
     };
   }
 
@@ -77,7 +76,7 @@ class CalendarProvider extends Component {
 
   setDate = (date, updateSource) => {
     const sameMonth = dateutils.sameMonth(XDate(date), XDate(this.state.date));
-    if((!this.state.canSelectPast && dateutils.isGTE(XDate(date), XDate(this.state.today))) || this.state.canSelectPast){
+    if(this.state.minDate && dateutils.isGTE(XDate(date), XDate(this.state.minDate)) || !this.state.minDate) {
       this.setState({date, updateSource, buttonIcon: this.getButtonIcon(date)}, () => {
         this.animateTodayButton(date);
       });
