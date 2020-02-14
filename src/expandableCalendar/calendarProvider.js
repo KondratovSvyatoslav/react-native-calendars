@@ -37,7 +37,11 @@ class CalendarProvider extends Component {
     /** Today button's style */
     todayButtonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /** The opacity for the disabled today button (0-1) */
-    disabledOpacity: PropTypes.number
+    disabledOpacity: PropTypes.number,
+    /** Should disabled past days selection deafult is false*/
+    canSelectPast: PropTypes.bool,
+    /** Minimum date to be selected */
+    minDate: PropTypes.any,
   }
 
   constructor(props) {
@@ -50,7 +54,8 @@ class CalendarProvider extends Component {
       buttonY: new Animated.Value(-props.todayBottomMargin || -TOP_POSITION),
       buttonIcon: this.getButtonIcon(props.date),
       disabled: false,
-      opacity: new Animated.Value(1)
+      opacity: new Animated.Value(1),
+      minDate: this.props.minDate || undefined,
     };
   }
 
@@ -71,13 +76,13 @@ class CalendarProvider extends Component {
 
   setDate = (date, updateSource) => {
     const sameMonth = dateutils.sameMonth(XDate(date), XDate(this.state.date));
+    if(this.state.minDate && dateutils.isGTE(XDate(date), XDate(this.state.minDate)) || !this.state.minDate) {
+      this.setState({date, updateSource, buttonIcon: this.getButtonIcon(date)}, () => {
+        this.animateTodayButton(date);
+      });
 
-    this.setState({date, updateSource, buttonIcon: this.getButtonIcon(date)}, () => {
-      this.animateTodayButton(date);
-    });
-
-    _.invoke(this.props, 'onDateChanged', date, updateSource);
-    
+      _.invoke(this.props, 'onDateChanged', date, updateSource);
+    }
     if (!sameMonth) {
       _.invoke(this.props, 'onMonthChange', xdateToData(XDate(date)), updateSource);
     }
