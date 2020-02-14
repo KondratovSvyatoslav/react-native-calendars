@@ -81,12 +81,8 @@ class CalendarProvider extends Component {
         this.animateTodayButton(date);
       });
 
-    this.setState({date, updateSource, buttonIcon: this.getButtonIcon(date)}, () => {
-      this.animateTodayButton(date);
-    });
-
-    _.invoke(this.props, 'onDateChanged', date, updateSource);
-  }
+      _.invoke(this.props, 'onDateChanged', date, updateSource);
+    }
     if (!sameMonth) {
       _.invoke(this.props, 'onMonthChange', xdateToData(XDate(date)), updateSource);
     }
