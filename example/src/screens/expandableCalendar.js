@@ -144,10 +144,14 @@ export default class ExpandableCalendarScreen extends Component {
       dotColor: themeColor,
       selectedDotColor: 'black',
       disabledDotColor: disabledColor,
-      dotStyle: {marginTop: -2},
-      selectedDotStyle: {marginTop: -5},
-      selectedWidth: 21,
-      selectedHeight: 21,
+      dotStyle: {marginTop: 2},
+      selectedDotStyle: {marginTop: 5},
+      selectedDayStyle:{
+        width: 20,
+        height: 20,
+      },
+      baseWidth: 20,
+      baseHeight: 20,
 
       // calendarBackground: 'transparent',     
 
