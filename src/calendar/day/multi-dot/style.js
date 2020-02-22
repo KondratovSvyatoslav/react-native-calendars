@@ -29,10 +29,11 @@ export default function styleConstructor(theme={}) {
       height: appStyle.selectedHeight,
     },
     today: {
-      backgroundColor: appStyle.todayBackgroundColor
+      backgroundColor: appStyle.todayBackgroundColor,
     },
     todayText: {
-      color: appStyle.todayTextColor
+      color: appStyle.todayTextColor,
+      ...appStyle.todayTextStyle,
     },
     selectedText: {
       color: appStyle.selectedDayTextColor
